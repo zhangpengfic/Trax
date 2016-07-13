@@ -18,6 +18,29 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         }
     }
   
+    var gpxURL: NSURL? {
+        didSet {
+            clearWaypoints()
+            if let url = gpxURL {
+                GPX.parse(url) {
+                    if let gpx = $0 {
+                        self.handleWaypoints(gpx.waypoints)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func clearWaypoints() {
+        if mapView?.annotations != nil { mapView.removeAnnotations(mapView.annotations as [MKAnnotation]) }
+    }
+    
+    private func handleWaypoints(waypoints: [GPX.Waypoint]) {
+        mapView.addAnnotations(waypoints)
+        mapView.showAnnotations(waypoints, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +50,7 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         
         center.addObserverForName(GPXURL.Notification, object: appDelegate, queue: queue) { notification in
             if let url = notification.userInfo?[GPXURL.Key] as? NSURL {
-//                self.gpxURL = url
+                self.gpxURL = url
                 print(url)
             }
         }
