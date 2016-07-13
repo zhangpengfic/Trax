@@ -40,6 +40,58 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         mapView.showAnnotations(waypoints, animated: true)
     }
     
+    // MARK: - Constants
+    
+    private struct Constants {
+        static let PartialTrackColor = UIColor.greenColor()
+        static let FullTrackColor = UIColor.blueColor().colorWithAlphaComponent(0.5)
+        static let TrackLineWidth: CGFloat = 3.0
+        static let ZoomCooldown = 1.5
+        static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
+        static let AnnotationViewReuseIdentifier = "waypoint"
+        static let ShowImageSegue = "Show Image"
+        static let EditWaypointSegue = "Edit Waypoint"
+        static let EditWaypointPopoverWidth: CGFloat = 320
+    }
+    
+    // MARK: - MKMapViewDelegate
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.AnnotationViewReuseIdentifier)
+        if view == nil {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.AnnotationViewReuseIdentifier)
+            view!.canShowCallout = true
+        } else {
+            view!.annotation = annotation
+        }
+        
+        view!.leftCalloutAccessoryView = nil
+        
+        if let waypoint = annotation as? GPX.Waypoint {
+            if waypoint.thumbnailURL != nil {
+                view!.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
+            }
+        }
+       
+        return view
+    }
+
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if let waypoint = view.annotation as? GPX.Waypoint {
+            if let url = waypoint.thumbnailURL {
+                if view.leftCalloutAccessoryView == nil {
+                    view.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
+                }
+                if let thumbnailImageButton = view.leftCalloutAccessoryView as? UIButton {
+                    if let imageData = NSData(contentsOfURL: url) {
+                        if let image = UIImage(data: imageData) {
+                            thumbnailImageButton.setImage(image, forState: .Normal)
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +107,7 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
             }
         }
         
-//        gpxURL = NSURL(string: "http://cs193p.stanford.edu/Vacation.gpx")
+        gpxURL = NSURL(string: "http://cs193p.stanford.edu/Vacation.gpx")
     }
 
 
