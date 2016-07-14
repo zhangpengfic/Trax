@@ -66,10 +66,13 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         }
         
         view!.leftCalloutAccessoryView = nil
-        
+        view!.rightCalloutAccessoryView = nil
         if let waypoint = annotation as? GPX.Waypoint {
             if waypoint.thumbnailURL != nil {
-                view!.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
+                view!.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
+            }
+            if waypoint.imageURL != nil {
+                view?.rightCalloutAccessoryView = UIButton.init(type: .DetailDisclosure)
             }
         }
        
@@ -82,16 +85,37 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
                 if view.leftCalloutAccessoryView == nil {
                     view.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
                 }
-                if let thumbnailImageButton = view.leftCalloutAccessoryView as? UIButton {
+                if let thumbnailImageView = view.leftCalloutAccessoryView as? UIImageView {
                     if let imageData = NSData(contentsOfURL: url) {
                         if let image = UIImage(data: imageData) {
-                            thumbnailImageButton.setImage(image, forState: .Normal)
+                            thumbnailImageView.image=image
                         }
                     }
                 }
             }
         }
     }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        performSegueWithIdentifier(Constants.ShowImageSegue, sender: view)
+        
+    }
+    
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier==Constants.ShowImageSegue{
+            if let waypoint = (sender as? MKAnnotationView)?.annotation as? GPX.Waypoint{
+                if let ivc = segue.destinationViewController as?
+                ImageViewController {
+                ivc.imageURL = waypoint.imageURL
+                ivc.title=waypoint.title
+                }
+            }
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
