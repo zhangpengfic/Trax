@@ -10,6 +10,9 @@ import Foundation
 import MapKit
 
 extension GPX.Waypoint:MKAnnotation{
+    
+    //MARK: - MKAnnotation
+    
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
@@ -18,6 +21,8 @@ extension GPX.Waypoint:MKAnnotation{
     
     var subtitle: String? { return info }
     
+    //MARK: - Links to Image
+
     var thumbnailURL: NSURL? { return getImageURLofType("thumbnail") }
     var imageURL: NSURL? { return getImageURLofType("large") }
     
