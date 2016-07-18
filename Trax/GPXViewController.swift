@@ -85,7 +85,7 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         if let waypoint = view.annotation as? GPX.Waypoint {
             if let url = waypoint.thumbnailURL {
                 if view.leftCalloutAccessoryView == nil {
-                    view.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
+                    view.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
                 }
                 if let thumbnailImageView = view.leftCalloutAccessoryView as? UIImageView {
                     if let imageData = NSData(contentsOfURL: url) {
