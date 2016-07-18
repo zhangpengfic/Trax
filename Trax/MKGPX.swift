@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 
+
 extension GPX.Waypoint:MKAnnotation{
     
     //MARK: - MKAnnotation

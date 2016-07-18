@@ -42,6 +42,19 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         mapView.showAnnotations(waypoints, animated: true)
     }
     
+    @IBAction func addWaypoint(sender: UILongPressGestureRecognizer) {
+        if sender.state==UIGestureRecognizerState.Began{
+            let coordinate = mapView.convertPoint(sender.locationInView(mapView), toCoordinateFromView: mapView)
+            let waypoint = GPX.Waypoint(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            waypoint.name="Dropped"
+            mapView.addAnnotation(waypoint)
+            
+            
+        }
+        
+        
+        
+    }
     // MARK: - Constants
     
     private struct Constants {
@@ -71,11 +84,11 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         view!.rightCalloutAccessoryView = nil
         if let waypoint = annotation as? GPX.Waypoint {
             if waypoint.thumbnailURL != nil {
-                view!.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
+                view!.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
             }
-            if waypoint.imageURL != nil {
-                view?.rightCalloutAccessoryView = UIButton.init(type: .DetailDisclosure)
-            }
+//            if waypoint.imageURL != nil {
+//                view?.rightCalloutAccessoryView = UIButton.init(type: .DetailDisclosure)
+//            }
         }
        
         return view
@@ -85,12 +98,12 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         if let waypoint = view.annotation as? GPX.Waypoint {
             if let url = waypoint.thumbnailURL {
                 if view.leftCalloutAccessoryView == nil {
-                    view.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
+                    view.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
                 }
-                if let thumbnailImageView = view.leftCalloutAccessoryView as? UIImageView {
+                if let thumbnailButton = view.leftCalloutAccessoryView as? UIButton {
                     if let imageData = NSData(contentsOfURL: url) {
                         if let image = UIImage(data: imageData) {
-                            thumbnailImageView.image=image
+                            thumbnailButton.setImage(image, forState: .Normal)
                         }
                     }
                 }
