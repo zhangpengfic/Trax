@@ -15,6 +15,7 @@
 		BB0A5CAD1D35D8F500A8BA78 /* TraxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0A5CAC1D35D8F500A8BA78 /* TraxUITests.swift */; };
 		BB0A5CBB1D35DB6E00A8BA78 /* GPXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0A5CBA1D35DB6E00A8BA78 /* GPXViewController.swift */; };
 		BB0D37731D371BC3004F41DD /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0D37721D371BC3004F41DD /* ImageViewController.swift */; };
+		BB4F2B371D3CC987004B1605 /* EditWaypointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4F2B361D3CC987004B1605 /* EditWaypointViewController.swift */; };
 		BBAF5F6D1D35E1590073DB6E /* GPX.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAF5F6C1D35E1590073DB6E /* GPX.swift */; };
 		BBAF5F6F1D35E2AD0073DB6E /* MKGPX.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAF5F6E1D35E2AD0073DB6E /* MKGPX.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		BB0A5CAE1D35D8F500A8BA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB0A5CBA1D35DB6E00A8BA78 /* GPXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPXViewController.swift; sourceTree = "<group>"; };
 		BB0D37721D371BC3004F41DD /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		BB4F2B361D3CC987004B1605 /* EditWaypointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditWaypointViewController.swift; sourceTree = "<group>"; };
 		BBAF5F6C1D35E1590073DB6E /* GPX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPX.swift; sourceTree = "<group>"; };
 		BBAF5F6E1D35E2AD0073DB6E /* MKGPX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKGPX.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,7 @@
 				BB0A5C8C1D35D8F500A8BA78 /* AppDelegate.swift */,
 				BB0A5CBA1D35DB6E00A8BA78 /* GPXViewController.swift */,
 				BB0D37721D371BC3004F41DD /* ImageViewController.swift */,
+				BB4F2B361D3CC987004B1605 /* EditWaypointViewController.swift */,
 				BB0A5C901D35D8F500A8BA78 /* Main.storyboard */,
 				BB0A5C931D35D8F500A8BA78 /* Assets.xcassets */,
 				BB0A5C951D35D8F500A8BA78 /* LaunchScreen.storyboard */,
@@ -268,6 +271,7 @@
 			files = (
 				BB0A5C8D1D35D8F500A8BA78 /* AppDelegate.swift in Sources */,
 				BBAF5F6F1D35E2AD0073DB6E /* MKGPX.swift in Sources */,
+				BB4F2B371D3CC987004B1605 /* EditWaypointViewController.swift in Sources */,
 				BB0D37731D371BC3004F41DD /* ImageViewController.swift in Sources */,
 				BB0A5CBB1D35DB6E00A8BA78 /* GPXViewController.swift in Sources */,
 				BBAF5F6D1D35E1590073DB6E /* GPX.swift in Sources */,

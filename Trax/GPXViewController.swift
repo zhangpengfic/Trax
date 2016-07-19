@@ -55,19 +55,7 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         
         
     }
-    // MARK: - Constants
-    
-    private struct Constants {
-        static let PartialTrackColor = UIColor.greenColor()
-        static let FullTrackColor = UIColor.blueColor().colorWithAlphaComponent(0.5)
-        static let TrackLineWidth: CGFloat = 3.0
-        static let ZoomCooldown = 1.5
-        static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
-        static let AnnotationViewReuseIdentifier = "waypoint"
-        static let ShowImageSegue = "Show Image"
-        static let EditWaypointSegue = "Edit Waypoint"
-        static let EditWaypointPopoverWidth: CGFloat = 320
-    }
+   
     
     // MARK: - MKMapViewDelegate
     
@@ -87,9 +75,9 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
             if waypoint.thumbnailURL != nil {
                 view!.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
             }
-//            if waypoint.imageURL != nil {
-//                view?.rightCalloutAccessoryView = UIButton.init(type: .DetailDisclosure)
-//            }
+            if annotation is EditableWaypoint {
+                view?.rightCalloutAccessoryView = UIButton.init(type: .DetailDisclosure)
+            }
         }
        
         return view
@@ -113,8 +101,14 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        performSegueWithIdentifier(Constants.ShowImageSegue, sender: view)
-        
+        if (control as? UIButton)?.buttonType == UIButtonType.DetailDisclosure{
+            mapView.deselectAnnotation(view.annotation, animated: false)
+            performSegueWithIdentifier(Constants.EditWaypointSegue, sender: view)
+        }else if let waypoint = view.annotation as? GPX.Waypoint {
+            if waypoint.imageURL != nil{
+                performSegueWithIdentifier(Constants.ShowImageSegue, sender: view)
+            }
+        }
     }
     
     
@@ -123,10 +117,17 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier==Constants.ShowImageSegue{
             if let waypoint = (sender as? MKAnnotationView)?.annotation as? GPX.Waypoint{
-                if let ivc = segue.destinationViewController as?
+                if let ivc = segue.destinationViewController.contentViewController as?
                 ImageViewController {
                 ivc.imageURL = waypoint.imageURL
                 ivc.title=waypoint.title
+                }
+            }
+        }else if segue.identifier==Constants.EditWaypointSegue {
+            if let waypoint = (sender as? MKAnnotationView)?.annotation as? EditableWaypoint{
+                if let ewvc = segue.destinationViewController.contentViewController as?
+                    EditWaypointViewController {
+                    ewvc.waypointToEdit = waypoint
                 }
             }
         }
@@ -149,6 +150,26 @@ class GPXViewController: UIViewController,MKMapViewDelegate {
         
         gpxURL = NSURL(string: "http://cs193p.stanford.edu/Vacation.gpx")
     }
-
+    // MARK: - Constants
+    
+    private struct Constants {
+        
+        static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
+        static let AnnotationViewReuseIdentifier = "waypoint"
+        static let ShowImageSegue = "Show Image"
+        static let EditWaypointSegue = "Edit Waypoint"
+        static let EditWaypointPopoverWidth: CGFloat = 320
+    }
 
 }
+
+extension UIViewController {
+    var contentViewController: UIViewController {
+        if let navcon = self as? UINavigationController {
+            return navcon.visibleViewController!
+        } else {
+            return self
+        }
+    }
+}
+
