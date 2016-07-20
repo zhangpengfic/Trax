@@ -92,18 +92,25 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YXr-os-S8f">
+                                <rect key="frame" x="10" y="104" width="579" height="424"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstItem="qPj-dY-rrH" firstAttribute="trailing" secondItem="QLV-jz-UgO" secondAttribute="trailing" id="4yh-Pc-EZa"/>
                             <constraint firstItem="QLV-jz-UgO" firstAttribute="leading" secondItem="Vi2-MA-rtL" secondAttribute="trailing" constant="19" id="AVR-Np-6K0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YXr-os-S8f" secondAttribute="trailing" constant="-9" id="Icj-FZ-uKV"/>
                             <constraint firstItem="QLV-jz-UgO" firstAttribute="baseline" secondItem="Vi2-MA-rtL" secondAttribute="baseline" id="MZC-hN-Yvk"/>
                             <constraint firstItem="npC-5Z-5tJ" firstAttribute="top" secondItem="Vi2-MA-rtL" secondAttribute="bottom" constant="16" id="Mj5-pt-2pj"/>
+                            <constraint firstItem="c2F-EG-CMb" firstAttribute="top" secondItem="YXr-os-S8f" secondAttribute="bottom" constant="8" id="O4j-vX-u4P"/>
+                            <constraint firstItem="YXr-os-S8f" firstAttribute="top" secondItem="qPj-dY-rrH" secondAttribute="bottom" constant="8" id="OHf-MD-E4Z"/>
                             <constraint firstItem="qPj-dY-rrH" firstAttribute="leading" secondItem="QLV-jz-UgO" secondAttribute="leading" id="Pi0-rH-G1R"/>
                             <constraint firstItem="Vi2-MA-rtL" firstAttribute="leading" secondItem="FIP-89-MyW" secondAttribute="leadingMargin" constant="-3" id="Z7F-fA-hwa"/>
                             <constraint firstItem="qPj-dY-rrH" firstAttribute="baseline" secondItem="npC-5Z-5tJ" secondAttribute="baseline" id="ZeY-yI-GhV"/>
                             <constraint firstItem="c2F-EG-CMb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="npC-5Z-5tJ" secondAttribute="bottom" constant="12" id="ao5-LQ-7du"/>
                             <constraint firstItem="npC-5Z-5tJ" firstAttribute="trailing" secondItem="Vi2-MA-rtL" secondAttribute="trailing" id="fCA-rf-aFk"/>
                             <constraint firstItem="Vi2-MA-rtL" firstAttribute="top" secondItem="L5o-SG-MFN" secondAttribute="bottom" constant="12" id="hr9-35-c6Z"/>
+                            <constraint firstItem="YXr-os-S8f" firstAttribute="leading" secondItem="FIP-89-MyW" secondAttribute="leadingMargin" constant="-10" id="tpG-JM-FeJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QLV-jz-UgO" secondAttribute="trailing" constant="11" id="wO3-QU-8vN"/>
                         </constraints>
                     </view>
@@ -115,6 +122,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="imageViewContainer" destination="YXr-os-S8f" id="uDd-gE-PqN"/>
                         <outlet property="infoTextField" destination="qPj-dY-rrH" id="IdL-aU-ucu"/>
                         <outlet property="nameTextField" destination="QLV-jz-UgO" id="QpY-Iv-i0B"/>
                     </connections>
