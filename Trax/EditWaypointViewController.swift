@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class EditWaypointViewController: UIViewController,UITextFieldDelegate {
+class EditWaypointViewController: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     
     var waypointToEdit:EditableWaypoint? {didSet{updateUI()}}
@@ -45,6 +46,49 @@ class EditWaypointViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
+    @IBAction func takePhoto() {
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            let picker = UIImagePickerController()
+            picker.sourceType = .Camera
+            // if video, check media type
+            picker.mediaTypes = [kUTTypeImage as String]
+            picker.delegate = self
+            picker.allowsEditing = true
+            presentViewController(picker, animated: true, completion: nil)
+        }
+        
+    }
+    // MARK: - UIImagePickerControllerDelegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        var image = info[UIImagePickerControllerEditedImage] as? UIImage
+        if image == nil {
+            image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        }
+        imageView.image = image
+        makeRoomForImage()
+        saveImageInWaypoint()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func saveImageInWaypoint(){
+        if let image = imageView.image {
+            if let imageDate = UIImageJPEGRepresentation(image, 1.0) {
+                let fileManager = NSFileManager()
+                if let docsDir = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first {
+                    let unique = NSDate.timeIntervalSinceReferenceDate()
+                    let url = docsDir.URLByAppendingPathComponent("\(unique).jpg")
+                    let path = url.absoluteString
+                    if imageDate.writeToURL(url, atomically: true) {
+                        waypointToEdit?.links = [GPX.Link.init(href: path)]
+                    }
+                }
+            }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     //MARK: - TextField
     
